@@ -1,0 +1,40 @@
+.chat-container {
+    position: fixed; /* Fixa o chat na tela */
+    bottom: 20px; /* Espaçamento do fundo */
+    right: 20px; /* Espaçamento da direita */
+    background-color: rgba(255, 255, 255, 0.541); /* Fundo branco com opacidade */
+    backdrop-filter: blur(10px); /* Efeito de desfoque no fundo */
+    border-radius: 10px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); /* Sombra para dar profundidade */
+    width: 600px; /* Largura fixa do chat */
+    height: 500px; /* Altura fixa do chat */
+    display: flex; /* Usar flexbox para organizar os filhos */
+    flex-direction: column; /* Coloca os filhos em coluna */
+    z-index: 1000; /* Para garantir que fique sobre outros elementos */
+}
+
+.chat-box-container {
+    flex: 1; /* Permite que esta parte ocupe o espaço restante */
+    overflow-y: auto; /* Permite rolagem apenas nesta área */
+    display: flex;
+    flex-direction: column; /* Coloca as mensagens em coluna */
+    gap: 10px; /* Espaçamento entre mensagens */
+    margin-bottom: 10px; /* Espaço na parte inferior */
+}
+
+.message {
+    background-color: #f0f0f0; /* Fundo da mensagem */
+    border-radius: 15px; /* Bordas arredondadas para o balão */
+    padding: 10px; /* Espaçamento interno */
+    max-width: 80%; /* Largura máxima do balão */
+    align-self: flex-start; /* Alinha a mensagem à esquerda */
+    word-wrap: break-word; /* Quebra palavras longas */
+    margin-bottom: 10px; /* Espaçamento entre as mensagens */
+}
+
+.inputs-and-btn-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
