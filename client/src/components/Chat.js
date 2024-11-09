@@ -61,8 +61,8 @@ const Chat = () => {
 
             <div className='inputs-and-btn-container'>
                 <TextField
-                    id="filled-basic"
-                    label="Message"
+                    fullWidth label="📭 Message"
+                     id="fullWidth"
                     variant="filled"
                     type="text"
                     value={message}

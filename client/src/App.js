@@ -1,8 +1,8 @@
 import './App.css';
 import ChatInterface from './interfaces/chat.interface';
-import Home from './components/home';
-import HomeInterface from './interfaces/home.interface';
+import UserInterface from './interfaces/user.interface';
 import ChatPage from './Pages/chat.page';
+import UserPage from './Pages/user.page';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
         <Routes>
           {/* Definindo rotas corretamente com `element` */}
           <Route path='/chat' element={<ChatPage Component={ChatInterface} />} />
-          <Route path='/home' element={<HomeInterface Component={Home} />} />
+          <Route path='/user' element={ <UserPage Component={UserInterface} />} />
         </Routes>
       </Router>
     </div>
