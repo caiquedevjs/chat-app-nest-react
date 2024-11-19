@@ -35,8 +35,7 @@ const User = () => {
         } else {
             navigate('/chat', { state: { nickname, age, bio, image } });
         }
-    }
-
+    };
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {

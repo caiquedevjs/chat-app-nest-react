@@ -6,7 +6,6 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import XIcon from '@mui/icons-material/X';
 import '../styles/home.style.css';
 
-<<<<<<< HEAD
 
 const Home = ()=>{
     const navigate = useNavigate();
@@ -14,14 +13,12 @@ const Home = ()=>{
         navigate('/user')
     }
     return(
-=======
-const Home = () => {
-    return (
->>>>>>> 7cd58a38cec4c10b9a985d868f3447b59b5c401a
+
+
         <div className='home-container'>
             <div className='home-container-box'>
                 <TextField
-<<<<<<< HEAD
+
                         required
                         id="outlined-required"
                         label="Mail"
@@ -44,13 +41,13 @@ const Home = () => {
                             <XIcon id='icons-x'/>
                             </div>
                         </div>
-=======
+
                     required
                     id="outlined-required"
                     label="Mail"
                     type='mail'
                     defaultValue="Hello World"
-                />
+                /{'>'}
                 <TextField
                     id="outlined-password-input"
                     label="Password"
@@ -67,7 +64,6 @@ const Home = () => {
                         <XIcon id='icons-x' />
                     </div>
                 </div>
->>>>>>> 7cd58a38cec4c10b9a985d868f3447b59b5c401a
             </div>
         </div>
     );
