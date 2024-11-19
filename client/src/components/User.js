@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Input, Button, Skeleton } from "@mui/material";
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { BlockPicker,} from 'react-color';
 import { useNavigate } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
 import '../styles/user.style.css';
@@ -21,6 +21,7 @@ const style = {
 const User = () => {
     const [image, setImage] = useState(null);
     const [nickname, setNickname] = useState('');
+    const [colorNickname, setColorNickname] = useState('');
     const [age, setAge] = useState('');
     const [bio, setBio] = useState('');
     const [open, setOpen] = useState(false);
@@ -33,7 +34,7 @@ const User = () => {
         if (nickname.trim() === '') {
             handleOpen();
         } else {
-            navigate('/chat', { state: { nickname, age, bio, image } });
+            navigate('/chat', { state: { nickname, age, bio, image, colorNickname } });
         }
     };
     const handleImageChange = (event) => {
@@ -85,6 +86,21 @@ const User = () => {
                         fullWidth
                         margin="normal"
                     />
+                  <div className="color-picker-container">
+    <BlockPicker 
+        color={colorNickname} 
+        onChangeComplete={(color) => setColorNickname(color.hex)} 
+        styles={{
+            default: {
+                card: {
+                    width: '100%', // Adapta ao contêiner
+                    height: 'auto' // Remove sombra extra
+                },
+            },
+        }}
+    />
+</div>
+
                     <TextField
                         id="age-input"
                         label="Age"

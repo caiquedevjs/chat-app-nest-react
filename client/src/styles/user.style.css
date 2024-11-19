@@ -35,7 +35,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .profile-image {
@@ -43,13 +43,25 @@
     width: 100px;
     height: 100px;
     object-fit: cover;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 /* Estilo para os campos de texto */
 .MuiTextField-root {
     margin-bottom: 1.2rem;
 }
+.color-picker-container {
+    display: flex;
+    justify-content: center; /* Centraliza o BlockPicker */
+    margin: 10px auto; /* Espaçamento automático */
+    max-width: 150px; /* Limita a largura */
+}
+
+.color-picker-container .block-picker {
+    width: 100%; /* Ajusta o BlockPicker ao contêiner */
+    max-width: 150px; /* Limita a largura */
+}
+
 
 /* Responsividade */
 @media (max-width: 768px) {
@@ -76,3 +88,4 @@
         width: 100%;
     }
 }
+

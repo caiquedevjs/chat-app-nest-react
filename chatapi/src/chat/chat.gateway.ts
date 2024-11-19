@@ -20,23 +20,25 @@ import { Server, Socket } from 'socket.io';
 export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer() server: Server;
     private logger: Logger = new Logger('ChatGateway');
-    private clients: Map<string, { nickname: string; image: string }> = new Map(); // Armazenar clientId, nickname e imagem
+    private clients: Map<string, { nickname: string; image: string ,  colorNickname: string }> = new Map(); // Armazenar clientId, nickname e imagem
 
     @SubscribeMessage('setNickname')
-    handleSetNickname(client: Socket, { nickname, image }: { nickname: string; image: string }): void {
-        this.clients.set(client.id, { nickname, image }); // Armazenar nickname e imagem
+    handleSetNickname(client: Socket, { nickname, image, colorNickname }: { nickname: string; image: string; colorNickname: string }): void {
+        this.clients.set(client.id, { nickname, image, colorNickname });
     }
+    
 
     @SubscribeMessage('msgToServer')
     handleMessage(client: Socket, { msg, image }: { msg: string; image: string }): void {
-        const sender = this.clients.get(client.id) || { nickname: 'Anonymous', image: '' };
+        const sender = this.clients.get(client.id) || { nickname: 'Anonymous', image: '', colorNickname: '#000' };
         this.server.emit('msgToClient', {
             msg,
             senderNickname: sender.nickname,
             senderImage: sender.image,
+            senderColorNickname: sender.colorNickname, // Corrigir aqui
         });
     }
-
+    
     afterInit(server: Server) {
         this.logger.log('Init');
     }

@@ -7,7 +7,7 @@ import { join } from 'path';
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: 'dist/src/uploads',
+      serveRoot: '/uploads',
     }),
   ],
   controllers: [],
