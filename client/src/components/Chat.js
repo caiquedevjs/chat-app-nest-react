@@ -17,13 +17,13 @@ const Chat = () => {
 
     const location = useLocation();
     const nicknameFromHome = location.state?.nickname;
-    const imageFromHome = location.state?.image; // Imagem passada do estado
+    const imageFromHome = location.state?.image; // A URL da imagem
 
     useEffect(() => {
         if (nicknameFromHome) {
             setNickname(nicknameFromHome);
-            setImage(imageFromHome); // Salvar a imagem localmente
-            socket.emit('setNickname', { nickname: nicknameFromHome, image: imageFromHome }); // Enviar nickname e imagem
+            setImage(imageFromHome); // A URL da imagem recebida
+            socket.emit('setNickname', { nickname: nicknameFromHome, image: imageFromHome });
         }
 
         socket.on('connect', () => {
@@ -34,7 +34,6 @@ const Chat = () => {
             console.error('Erro de conexão:', error);
         });
 
-        // Receber mensagens e imagens
         socket.on('msgToClient', ({ msg, senderNickname, senderImage }) => {
             setMessages((prev) => [
                 ...prev,
@@ -50,34 +49,25 @@ const Chat = () => {
         };
     }, [nicknameFromHome, imageFromHome]);
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0]; // Captura o primeiro arquivo
-        if (file) {
-            setImage(file);  // Armazena o arquivo de imagem
-        }
-    };
-    
     const sendMessage = async () => {
         if (message && image) {
-            let base64Image = image;
-            
-            if (image instanceof File) {
-                base64Image = await convertImageToBase64(image); // Converte imagem para base64
-            }
+            const formData = new FormData();
+            formData.append('image', image);
+            formData.append('nickname', nickname);
     
-            socket.emit('msgToServer', { msg: message, image: base64Image });
+            const response = await fetch('http://localhost:3333/upload/profile', {
+                method: 'POST',
+                body: formData,
+            });
+    
+            const data = await response.json();
+            const imageUrl = data.url;
+    
+            socket.emit('msgToServer', { msg: message, image: imageUrl });
             setMessage('');
         }
     };
-    
-    const convertImageToBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(file); // Lê a imagem como base64
-        });
-    };
+
     return (
         <div className='chat-container'>
             <div className='chat-box-container'>
@@ -85,7 +75,7 @@ const Chat = () => {
                     {messages.map((msg, index) => (
                         <div key={index} className='message'>
                             <img
-                                src={msg.image}
+                                src={msg.image} // A URL da imagem que foi recebida
                                 alt="User Avatar"
                                 className='user-image'
                             />
@@ -101,7 +91,6 @@ const Chat = () => {
                 <TextField
                     fullWidth
                     label="📭 Message"
-                    id="fullWidth"
                     variant="filled"
                     type="text"
                     value={message}
@@ -117,4 +106,5 @@ const Chat = () => {
     );
 };
 
+   
 export default Chat;
