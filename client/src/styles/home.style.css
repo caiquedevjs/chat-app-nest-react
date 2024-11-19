@@ -1,70 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-.home-container{
+
+.home-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    
+    height: 100vh; /* Garante que ocupe toda a altura da tela */
+    margin: 0; /* Remove a margem padrão do body */
 }
-.home-container-box{
+
+.home-container-box {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 3rem;
-    padding: 10rem;
+    padding: 3rem; /* Reduzido o padding */
     border: none;
     border-radius: 10px;
-    background-image: radial-gradient(circle at 14.64% -11.24%, #f29aff 0, #c084ff 25%, #8f6cd8 50%, #6254ae 75%, #3b3e88 100%);
+    background-color: whitesmoke;
 }
-.sing-in-container{
+#btn-login{
+ background-color: rgb(31, 27, 27);
+}
+.sing-in-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 12rem;
 }
-.sing-up-text{
-    color: whitesmoke; 
+
+.sing-up-text {
+    color: #222121; 
     font-family: "Roboto", sans-serif;
     font-weight: 400;   
 }
-.icons-container{
+
+.icons-container {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
-#btn-login{
+#btn-login {
     padding: 10px;
     width: 325px;
 }
-#outlined-required{
-    width: 300px; 
-}
-#outlined-password-input{
+
+#outlined-required,
+#outlined-password-input {
     width: 300px;  
 }
-#icons-x{
-    color: whitesmoke;
+
+#icons-x,
+#icons-instagram {
+    color: #222121;
 }
 
-#icons-instagram{
-    color: whitesmoke;
-}
-
-#icons-x:hover{
-    color:#f29aff;
+#icons-x:hover,
+#icons-instagram:hover {
+    color: #222121;
     cursor: pointer;
     transition: 1s;
     transform: scale(1.2);
 }
 
-#icons-instagram:hover{
-    color:#f29aff;
+.sing-up-text:hover {
+    color: rgb(31, 27, 27);
     cursor: pointer;
     transition: 1s;
     transform: scale(1.2);
+     
 }
+<<<<<<< HEAD
 .sing-up-text:hover{
     color:#f29aff;
     cursor: pointer;
@@ -72,3 +80,5 @@
     transform: scale(1.2);
     
 }
+=======
+>>>>>>> 7cd58a38cec4c10b9a985d868f3447b59b5c401a

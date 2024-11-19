@@ -1,7 +1,78 @@
-.home-container{
+/* Container principal */
+.home-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20%;
-    gap: 10px;
+    height: 100vh;  /* Ajuste para que o container ocupe 100% da altura da tela */
+    padding: 20px;
+    box-sizing: border-box; /* Para garantir que o padding não cause rolagem */
+}
+
+/* Caixa de Formulário */
+.form-box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;  /* Limite de largura do formulário */
+    height: auto;  /* Altura automática para não ultrapassar o limite */
+    min-height: 400px; /* Definindo uma altura mínima para o formulário */
+}
+
+/* Título do Formulário */
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Upload da Foto de Perfil */
+.profile-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+/* Estilo para os campos de texto */
+.MuiTextField-root {
+    margin-bottom: 1.2rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-container {
+        align-items: center;
+    }
+
+    .profile-image-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .form-box {
+        width: 100%;
+        min-height: 400px; /* Garante uma altura mínima para o formulário em telas pequenas */
+    }
+
+    .banner-container {
+        width: 100%;
+    }
 }
