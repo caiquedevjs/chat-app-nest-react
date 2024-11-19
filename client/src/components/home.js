@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -7,6 +8,10 @@ import '../styles/home.style.css';
 
 
 const Home = ()=>{
+    const navigate = useNavigate();
+    const handleNavegationUser = ()=>{
+        navigate('/user')
+    }
     return(
         <div className='home-container'>
 
@@ -26,7 +31,7 @@ const Home = ()=>{
                         autoComplete="current-password"
                         />
                         <div className='btn-container'>
-                            <Button color="secondary" variant='contained' id='btn-login'>Entrar</Button>
+                            <Button color="secondary" variant='contained' id='btn-login' onClick={handleNavegationUser}>Entrar</Button>
                         </div>
                         <div className='sing-in-container'>
                             <p className='sing-up-text'>Sing-up</p>
