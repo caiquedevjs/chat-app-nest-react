@@ -25,29 +25,8 @@ const Home = ()=>{
                         type='mail'
                         defaultValue="Hello World"
                         />
-                        <TextField
-                        id="outlined-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                        />
-                        <div className='btn-container'>
-                            <Button color="secondary" variant='contained' id='btn-login' onClick={handleNavegationUser}>Entrar</Button>
-                        </div>
-                        <div className='sing-in-container'>
-                            <p className='sing-up-text'>Sing-up</p>
-                            <div className='icons-container'>
-                            <InstagramIcon id='icons-instagram'/>
-                            <XIcon id='icons-x'/>
-                            </div>
-                        </div>
-
-                    required
-                    id="outlined-required"
-                    label="Mail"
-                    type='mail'
-                    defaultValue="Hello World"
-                /{'>'}
+                       
+                     
                 <TextField
                     id="outlined-password-input"
                     label="Password"
