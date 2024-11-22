@@ -29,6 +29,7 @@ export  class userCreateService {
                 bio: data.bio,
             },
         });
+        return user;
        }
        catch(error){
         throw new Error(error);
