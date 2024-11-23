@@ -9,9 +9,9 @@ import '../styles/home.style.css';
 
 const Home = ()=>{
     const navigate = useNavigate();
-    const handleNavegationUser = ()=>{
-        navigate('/user')
-    }
+   const handlerSingIn =()=>{
+    navigate('/singin')
+   }
     return(
 
 
@@ -23,21 +23,20 @@ const Home = ()=>{
                         id="outlined-required"
                         label="Mail"
                         type='mail'
-                        defaultValue="Hello World"
+                        defaultValue=""
                         />
                        
-                     
-                <TextField
-                    id="outlined-password-input"
-                    label="Password"
-                    type="password"
-                    autoComplete="current-password"
-                />
+                       <TextField
+                        id="outlined-password-input"
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                    />
                 <div className='btn-container'>
                     <Button  variant='contained' id='btn-login'>Entrar</Button>
                 </div>
                 <div className='sing-in-container'>
-                    <p className='sing-up-text'>Sign-up</p>
+                    <p className='sing-up-text' onClick={handlerSingIn}>Sign-up</p>
                     <div className='icons-container'>
                         <InstagramIcon id='icons-instagram' />
                         <XIcon id='icons-x' />
