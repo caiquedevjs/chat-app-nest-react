@@ -19,17 +19,17 @@ export  class userCreateService {
         throw error('already registered user.')
        }
        try{
-        const user = await this.prismaService.user.create({
+        const Newuser = await this.prismaService.user.create({
             data: {
             
                 name: data.name,
                 mail: data.mail,
                 password: data.password,
-                Age: data.Age,
+                age: data.age,
                 bio: data.bio,
             },
         });
-        return user;
+        return Newuser;
        }
        catch(error){
         throw new Error(error);

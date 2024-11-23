@@ -14,7 +14,7 @@ model User {
   name String
   mail String
   password String
-  Age Int
+  age String
   bio String
 
   @@map("User")

@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsOptional, IsString,  } from "class-validator"
+import { IsEmail,  IsOptional, IsString,  } from "class-validator"
 
 
 export class userCrateDtos {
@@ -15,8 +15,8 @@ export class userCrateDtos {
     @IsString()
     password : string
 
-    @IsNumber()
-    Age : number
+    @IsString()
+    age : string
 
     @IsString()
     bio : string
