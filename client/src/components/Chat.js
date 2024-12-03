@@ -43,13 +43,18 @@ const Chat = () => {
         });
 
         socket.on('msgToClient', ({ msg, senderNickname, senderImage, senderColorNickname }) => {
+            // Captura o momento atual quando a mensagem é recebida
+            const nowMoment = new Date();
+            const formattedTime = nowMoment.toLocaleTimeString('pt-BR');
+
             setMessages((prev) => [
                 ...prev,
                 {
                     nickname: senderNickname,
                     text: msg,
                     image: senderImage,
-                    colorNickname: senderColorNickname
+                    colorNickname: senderColorNickname,
+                    time: formattedTime // Armazena a hora junto com a mensagem
                 }
             ]);
             notify(`${senderNickname} enviou uma mensagem.`);
@@ -75,40 +80,50 @@ const Chat = () => {
 
     return (
         <div className='chat-container'>
-            <div className='chat-box-container'>
-                <div>
-                    {messages.map((msg, index) => (
-                        <div key={index} className='message'>
-                            <img
-                                src={msg.image}
-                                alt="User Avatar"
-                                className='user-image'
-                            />
-                            <span>
-                                <strong style={{ color: msg.colorNickname }}>
-                                    {msg.nickname}:
-                                </strong>{' '}
-                                {msg.text}
-                            </span>
-                        </div>
-                    ))}
+            <div className='chat-box-container-div'>
+                <div className='chat-box-container'>
+                    <div>
+                        {messages.map((msg, index) => (
+                            <div key={index} className='message'>
+                                <div>
+                                    <img
+                                        src={msg.image}
+                                        alt="User Avatar"
+                                        className='user-image'
+                                    />
+                                </div>
+                                <span>
+                                    <strong style={{ color: msg.colorNickname }}>
+                                        {msg.nickname}:
+                                    </strong>{' '}
+                                    {msg.text}
+                                    <div>
+                                    <span style={{ fontSize: '0.8rem', color: '#888',  marginLeft: '75%'}}>
+                                        
+                                        {msg.time}
+                                    </span>
+                                    </div>
+                                </span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
 
-            <div className='inputs-and-btn-container'>
-                <TextField
-                    fullWidth
-                    label="📭 Message"
-                    variant="filled"
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' ? sendMessage() : null}
-                    placeholder="Digite sua mensagem"
-                />
-                <Button onClick={sendMessage} variant="contained">
-                    Enviar
-                </Button>
+                <div className='inputs-and-btn-container'>
+                    <TextField
+                        fullWidth
+                        label="📭 Message"
+                        variant="filled"
+                        type="text"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' ? sendMessage() : null}
+                        placeholder="Digite sua mensagem"
+                    />
+                    <Button onClick={sendMessage} variant="contained">
+                        Enviar
+                    </Button>
+                </div>
             </div>
         </div>
     );

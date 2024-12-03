@@ -1,4 +1,4 @@
-.chat-container {
+.chat-box-container-div {
     position: fixed; /* Fixa o chat na tela */
     bottom: 20px; /* Espaçamento do fundo */
     right: 20px; /* Espaçamento da direita */
@@ -7,8 +7,8 @@
     border-radius: 10px; /* Bordas arredondadas */
     padding: 20px; /* Espaçamento interno */
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); /* Sombra para dar profundidade */
-    width: 600px; /* Largura fixa do chat */
-    height: 500px; /* Altura fixa do chat */
+    width: 450px; /* Largura fixa do chat */
+    height: 350px; /* Altura fixa do chat */
     display: flex; /* Usar flexbox para organizar os filhos */
     flex-direction: column; /* Coloca os filhos em coluna */
     z-index: 1000; /* Para garantir que fique sobre outros elementos */
@@ -29,27 +29,33 @@
     padding: 10px; /* Espaçamento interno */
     max-width: 80%; /* Largura máxima do balão */
     align-self: flex-start; /* Alinha a mensagem à esquerda */
-    word-wrap: break-word; /* Quebra palavras longas */
     margin-bottom: 10px; /* Espaçamento entre as mensagens */
+    display: flex; /* Usar flexbox para alinhar imagem e texto */
+    align-items: flex-start; /* Alinha a imagem e o texto ao topo */
+    gap: 10px; /* Espaço entre a imagem, nickname e o texto */
+    word-wrap: break-word; /* Quebra palavras longas */
+    flex-wrap: wrap; /* Permite que a imagem e o texto quebrem linha, se necessário */
 }
 
+.message span {
+    word-wrap: break-word; /* Quebra o texto se necessário */
+    display: inline; /* Garante que o texto fique inline e não crie um novo bloco */
+    text-align: justify; /* Justifica o texto */
+    flex-grow: 1; /* Faz o texto ocupar o restante do espaço disponível */
+    max-width: calc(100% - 50px); /* Ajusta o tamanho do texto para evitar que ocupe todo o espaço */
+}
+
+.user-image {
+    width: 40px; /* Tamanho da imagem */
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover; /* Garante que a imagem seja ajustada sem deformação */
+    flex-shrink: 0; /* Impede que a imagem encolha */
+    align-self: flex-start;
+}
 .inputs-and-btn-container {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-}
-
-.message {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.user-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
 }
 

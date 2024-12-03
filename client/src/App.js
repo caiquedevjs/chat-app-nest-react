@@ -8,17 +8,36 @@ import HomePage from './Pages/home.page';
 import FormCreateUserPage from './Pages/form.create.user.page';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FormCreateUserInterface from './interfaces/form.create.user.interface';
+import ProtectedRoute from './middlewares/jwt.middleware.localstorage'; // Novo componente
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          {/* Definindo rotas corretamente com `element` */}
-          <Route path='/chat' element={<ChatPage Component={ChatInterface} />} />
-          <Route path='/user' element={ <UserPage Component={UserInterface} />} />
-          <Route path='/home' element={<HomePage Component={HomeInterface} />}/>
-          <Route path='/singin' element={<FormCreateUserPage Component={FormCreateUserInterface}/>}/>
+          {/* Rota inicial */}
+          <Route path='/home' element={<HomePage Component={HomeInterface} />} />
+
+          {/* Rota para criar usuário */}
+          <Route path='/singin' element={<FormCreateUserPage Component={FormCreateUserInterface} />} />
+
+          {/* Rotas protegidas */}
+          <Route 
+            path='/chat' 
+            element={
+              <ProtectedRoute>
+                <ChatPage Component={ChatInterface} />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path='/user' 
+            element={
+              <ProtectedRoute>
+                <UserPage Component={UserInterface} />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </Router>
     </div>

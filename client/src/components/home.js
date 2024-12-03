@@ -1,50 +1,55 @@
-import React from 'react';
-import {useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import XIcon from '@mui/icons-material/X';
 import '../styles/home.style.css';
 
-
-const Home = ()=>{
+const Home = () => {
     const navigate = useNavigate();
-   const handlerSingIn =()=>{
-    navigate('/singin')
-   }
-    return(
+    const [mail, setMail] = useState('');
+    const [password, setPassword] = useState('');
 
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post('http://localhost:3334/user_login/login', {
+                Mail: mail,
+                password: password,
+            });
 
+            // Armazenar token no localStorage
+            localStorage.setItem('token', response.data.accessToken);
+            alert("Login successful!");
+
+            // Navegar para a página principal
+            navigate('/chat');
+        } catch (error) {
+            alert("Login failed: " + error.response?.data?.message || error.message);
+        }
+    };
+
+    return (
         <div className='home-container'>
             <div className='home-container-box'>
                 <TextField
-
-                        required
-                        id="outlined-required"
-                        label="Mail"
-                        type='mail'
-                        defaultValue=""
-                        />
-                       
-                       <TextField
-                        id="outlined-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                    />
+                    required
+                    label="Mail"
+                    type='mail'
+                    value={mail}
+                    onChange={(e) => setMail(e.target.value)}
+                />
+                <TextField
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
                 <div className='btn-container'>
-                    <Button  variant='contained' id='btn-login'>Entrar</Button>
-                </div>
-                <div className='sing-in-container'>
-                    <p className='sing-up-text' onClick={handlerSingIn}>Sign-up</p>
-                    <div className='icons-container'>
-                        <InstagramIcon id='icons-instagram' />
-                        <XIcon id='icons-x' />
-                    </div>
+                    <Button variant='contained' id='btn-login' onClick={handleLogin}>Entrar</Button>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default Home;
