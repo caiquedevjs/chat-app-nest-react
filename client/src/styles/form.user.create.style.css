@@ -1,30 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-.form-conteiner{
+
+.form-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     height: 100vh; /* Garante que ocupe toda a altura da tela */
-    margin: 0; /* Remove a margem padrão do body */
-}
-.form-container-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 3rem;
-    padding: 3rem; /* Reduzido o padding */
-    border: none;
-    border-radius: 10px;
-    background-color: whitesmoke;
-}
-#box-form-id{
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    margin: 100px; /* Remove a margem padrão do body */
 }
 
-#outlined-required, #outlined-number,
+.container-logo-form {
+    flex: 1; /* Permite que a logo ocupe uma parte do espaço */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imagem-logo-from{
+    border: none;
+}
+
+
+.form-container-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem; /* Ajustado para um espaçamento mais sutil */
+    padding: 2rem; /* Reduzido o padding */
+    border-radius: 10px;
+    background-color: #937460;
+    width: 400px; /* Ajustado para um tamanho mais compacto */
+}
+
+#box-form-id {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaçamento entre os campos do formulário */
+}
+
+#outlined-required,
+#outlined-number,
 #outlined-password-input {
-    width: 300px;  
+    width: 100%; /* Ajusta a largura para ocupar todo o espaço disponível */
 }

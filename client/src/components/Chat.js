@@ -120,7 +120,7 @@ const Chat = () => {
                         onKeyPress={(e) => e.key === 'Enter' ? sendMessage() : null}
                         placeholder="Digite sua mensagem"
                     />
-                    <Button onClick={sendMessage} variant="contained">
+                    <Button onClick={sendMessage} variant="contained" sx={{ bgcolor: 'success.main', color: 'white' }}>
                         Enviar
                     </Button>
                 </div>

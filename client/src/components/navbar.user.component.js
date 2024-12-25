@@ -14,7 +14,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pagesWithIcons = [
+  { name: 'Loja', icon: <img src="2913097_amethyst_crystal shard_fantasy_gem_magic_icon.svg" alt="Loja" style={{ width: '40px', height: '40px' }} /> },
+  { name: 'Inventario', icon: <img src="2913117_bag_coin_game_gold_item bag_icon.svg" alt="Inventário" style={{ width: '40px', height: '40px' }} /> },
+  { name: 'Quests', icon: <img src="2913095_adventure_adventure map_fantasy_map_quest_icon.svg" alt="Quests" style={{ width: '40px', height: '40px' }} /> },
+  { name: 'Habilidades', icon: <img src="2913104_book_fantasy_magic_rpg_spell_icon.svg" alt="Habilidades" style={{ width: '40px', height: '40px' }} /> },
+];
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBarUser = () => {
@@ -25,10 +31,10 @@ const NavBarUser = () => {
   const location = useLocation();
   const imageFromUser = location.state?.image;
 
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -42,13 +48,13 @@ const NavBarUser = () => {
   };
 
   const handleNavigateToProfile = () => {
-    navigate('/user');  // Navigate to the /user page
-    handleCloseUserMenu();  // Close the menu after navigating
+    navigate('/user');  
+    handleCloseUserMenu();  
   };
 
   return (
     <div className="nav-bar-conteiner">
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: '#937460' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -97,9 +103,9 @@ const NavBarUser = () => {
                 onClose={handleCloseNavMenu}
                 sx={{ display: { xs: 'block', md: 'none' } }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                {pagesWithIcons.map(({ name, icon }) => (
+                  <MenuItem key={name} onClick={handleCloseNavMenu}>
+                    <Typography sx={{ textAlign: 'center' }}>{icon}{name}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -123,54 +129,76 @@ const NavBarUser = () => {
             >
               LOGO
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
+            <Box sx={{ flexGrow: 1, display:{ xs:'none', md:'flex'} }}>
+              {pagesWithIcons.map(({ name, icon }) => (
                 <Button
-                  key={page}
+                  key={name}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{
+                    my :2,
+                    color:'white',
+                    display:'flex',
+                    alignItems:'center',
+                    gap:'5px',
+                    position:'relative',
+                    '&::after': {
+                      content:"''",
+                      position:'absolute',
+                      left:'15%',
+                      bottom:'0%',
+                      width:'80%',
+                      height:'3px',
+                      backgroundColor:'#fff',
+                      transform:'scaleX(0)',
+                      transition:'transform .3s ease-in-out',
+                      transformOrigin:'left',
+                    },
+                    '&:hover::after': {
+                      transform:'scaleX(1)',
+                    }
+                  }}
                 >
-                  {page}
+                  {icon}{name}
                 </Button>
               ))}
             </Box>
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow :0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p :0 }}>
                   <Avatar alt="Remy Sharp" src={imageFromUser} />
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: '45px' }}
+                sx={{ mt :5 }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical:'top',
+                  horizontal:'right',
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    onClick={setting === 'Account' ? handleNavigateToProfile : handleCloseUserMenu}
-                  >
-                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </div>
-  );
+                  vertical:'top',
+                  horizontal:'right',
+                 }}
+                 open={Boolean(anchorElUser)}
+                 onClose={handleCloseUserMenu}
+               >
+                 {settings.map((setting) => (
+                   <MenuItem
+                     key={setting}
+                     onClick={setting ==='Account'? handleNavigateToProfile : handleCloseUserMenu}
+                   >
+                     <Typography sx={{ textAlign :'center' }}>{setting}</Typography>
+                   </MenuItem>
+                 ))}
+               </Menu>
+             </Box>
+           </Toolbar>
+         </Container>
+       </AppBar>
+     </div>
+   );
 };
 
 export default NavBarUser;

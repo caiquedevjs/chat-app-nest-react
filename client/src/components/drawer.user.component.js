@@ -7,6 +7,7 @@ import { grey } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
+import { Tooltip } from 'react-tooltip'
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 
@@ -47,6 +48,8 @@ const FloatingButton = styled(Button)(({ theme }) => ({
   top: '20%', // Coloca o botão no meio da altura da tela
   zIndex: 1300, // Garante que o botão fique sobre outros elementos
   transform: 'translateY(-50%)', // Para centralizar o botão verticalmente
+  display: 'flex', // Usar flexbox para alinhar os itens
+  alignItems: 'center', // Alinha verticalmente os itens
 }));
 
 function SwipeableEdgeDrawerUser(props) {
@@ -76,9 +79,18 @@ function SwipeableEdgeDrawerUser(props) {
       />
       
       {/* Botão flutuante que abre o Drawer */}
-      <FloatingButton onClick={toggleDrawer(true)} variant="contained">
-        Open
+      <FloatingButton >
+      <a
+  data-tooltip-id="my-tooltip"
+  data-tooltip-content="Lista de aliados"
+  data-tooltip-place="top"
+  data-tooltip-variant="success"
+>
+        <img src="2913111_fantasy_game_magic_magician_parchment_icon.svg" alt="Aliados" style={{ width: '50px', height: '50px', marginRight: '8px' }} onClick={toggleDrawer(true)} variant="contained" />
+        </a>
+        
       </FloatingButton>
+      <Tooltip id="my-tooltip" />
       
       <SwipeableDrawer
         container={container}

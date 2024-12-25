@@ -12,7 +12,7 @@ const FormCreateUser = () => {
       bio, setBio,
       password, setPassword,
       age, setAge,
-      nickname, setNickname, // Novo estado para nickname
+      nickname, setNickname,
       loading,
       error,
       handleSubmit,
@@ -20,6 +20,10 @@ const FormCreateUser = () => {
 
     return (
         <div className='form-container'>
+          <div className='container-logo-form'>
+            
+        </div>
+
           <div className='form-container-box'>
             <form onSubmit={handleSubmit} id='box-form-id'>
               <TextField
@@ -41,7 +45,7 @@ const FormCreateUser = () => {
               />
               <TextField
                 required
-                label="Nickname" // Novo campo nickname
+                label="Nickname"
                 value={nickname} 
                 onChange={(e) => setNickname(e.target.value)} 
               />
@@ -59,7 +63,7 @@ const FormCreateUser = () => {
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
               />
-              <Button type="submit" variant="contained" color="primary" disabled={loading}>
+              <Button type="submit" variant="contained" color="success" disabled={loading}>
                   {loading ? 'Criando...' : 'Criar Usuário'}
               </Button>
               
