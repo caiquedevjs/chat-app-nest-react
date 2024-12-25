@@ -5,6 +5,10 @@ import { userCreateService } from '../user.service/user.create.service';
 import { PrismaService } from '../user.service/prisma.service';
 import { loginUserService } from '../user.service/user.login.service';
 import { userLoginController } from '../user.controller/user.login.crontroller';
+import { UserControllerFindId } from '../user.controller/user.find.id.controller';
+import { UserFindIdService } from '../user.service/user.find.id.service';
+import { UserControllerFindMail } from '../user.controller/user.find.mail.controller';
+import { UserFindMailService } from '../user.service/user.find.mail.service';
 
 
 
@@ -15,7 +19,7 @@ import { userLoginController } from '../user.controller/user.login.crontroller';
         signOptions: { expiresIn: '1h' },
     }),
 ],
-  controllers: [userCreateController,userLoginController],
-  providers: [userCreateService, PrismaService,loginUserService],
+  controllers: [userCreateController,userLoginController, UserControllerFindId, UserControllerFindMail],
+  providers: [userCreateService, PrismaService,loginUserService, UserFindIdService, UserFindMailService],
 })
 export class userModule {}

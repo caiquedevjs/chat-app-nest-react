@@ -1,7 +1,8 @@
 // src/hooks/useCreateUser.js
 import { useState } from "react";
-
+import { useNavigate } from 'react-router-dom';
 const useCreateUser = () => {
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [mail, setMail] = useState('');
     const [bio, setBio] = useState('');
@@ -33,7 +34,8 @@ const useCreateUser = () => {
 
             if (response.ok) {
                 console.log("User created.");
-                // Aqui você pode adicionar qualquer lógica após o sucesso da criação
+                navigate('/chat');
+                
             } else {
                 const data = await response.json();
                 setError(data.message || 'Erro ao criar usuário');
