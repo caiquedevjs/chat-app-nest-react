@@ -18,8 +18,11 @@ export class userCrateDtos {
     @IsString()
     age : string
 
+    @IsOptional()
     @IsString()
-    bio : string
-    
+    bio? : string
+
+    @IsString()
+    nickname : string
 
 }

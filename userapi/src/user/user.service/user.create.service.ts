@@ -27,6 +27,7 @@ export  class userCreateService {
                 password: data.password,
                 age: data.age,
                 bio: data.bio,
+                nickname: data.nickname,
             },
         });
         return Newuser;
