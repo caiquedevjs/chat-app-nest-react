@@ -2,11 +2,14 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 const useCreateUser = () => {
+
+    // 💡 States usados
+    
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [mail, setMail] = useState('');
-    const [bio, setBio] = useState(''); // Campo bio permanece como opcional
-    const [nickname, setNickname] = useState(''); // Novo estado para nickname
+    const [bio, setBio] = useState(''); // 💡 Campo bio permanece como opcional
+    const [nickname, setNickname] = useState(''); // 💡Novo estado para nickname
     const [password, setPassword] = useState('');
     const [age, setAge] = useState('');
     const [loading, setLoading] = useState(false); 
@@ -16,12 +19,12 @@ const useCreateUser = () => {
         event.preventDefault(); 
         setLoading(true);
 
-        // Montando o objeto de dados a ser enviado
+        // 💡 Montando o objeto de dados a ser enviado
         const Data = {
             name,
             mail,
-            bio: bio || null, // Se bio não for preenchido, envia null
-            nickname, // Incluindo nickname
+            bio: bio || null, // 💡 Se bio não for preenchido, envia null
+            nickname, // 💡 Incluindo nickname
             password,
             age: age.toString()
         };
@@ -54,7 +57,7 @@ const useCreateUser = () => {
         name, setName,
         mail, setMail,
         bio, setBio,
-        nickname, setNickname, // Retornando o estado do nickname
+        nickname, setNickname, //💡 Retornando o estado do nickname
         password, setPassword,
         age, setAge,
         loading,

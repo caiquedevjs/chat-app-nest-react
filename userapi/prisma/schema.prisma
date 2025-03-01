@@ -17,6 +17,7 @@ model User {
   age String
   bio String? 
   nickname String
+  profileImage String?
 
   @@map("User")
 }

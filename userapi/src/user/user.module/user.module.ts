@@ -9,6 +9,9 @@ import { UserControllerFindId } from '../user.controller/user.find.id.controller
 import { UserFindIdService } from '../user.service/user.find.id.service';
 import { UserControllerFindMail } from '../user.controller/user.find.mail.controller';
 import { UserFindMailService } from '../user.service/user.find.mail.service';
+import { UserChangeProfileImageService } from '../user.service/user.change.profileimg.service';
+import { UserProfileController } from '../user.controller/user.profile.controller';
+import { CloudinaryService } from 'src/infra/cloudinary.service';
 
 
 
@@ -19,7 +22,7 @@ import { UserFindMailService } from '../user.service/user.find.mail.service';
         signOptions: { expiresIn: '1h' },
     }),
 ],
-  controllers: [userCreateController,userLoginController, UserControllerFindId, UserControllerFindMail],
-  providers: [userCreateService, PrismaService,loginUserService, UserFindIdService, UserFindMailService],
+  controllers: [userCreateController,userLoginController, UserControllerFindId, UserControllerFindMail, UserProfileController],
+  providers: [userCreateService, PrismaService,loginUserService, UserFindIdService, UserFindMailService, UserChangeProfileImageService, CloudinaryService],
 })
 export class userModule {}

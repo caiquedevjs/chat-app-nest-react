@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Input, Button, Skeleton } from "@mui/material";
-import { BlockPicker,} from 'react-color';
+import { BlockPicker } from 'react-color';
 import { useNavigate } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
+import useUpdateProfileImage from '../hooks/useUpdateProfileImage'; //💡 Importe o hook
 import '../styles/user.style.css';
+import { jwtDecode } from 'jwt-decode';//💡 Para decodificar o token
 
 const style = {
     position: 'absolute',
@@ -19,13 +21,21 @@ const style = {
 };
 
 const User = () => {
-    const [image, setImage] = useState(null);
-    const [nickname, setNickname] = useState('');
-    const [colorNickname, setColorNickname] = useState('');
-    const [age, setAge] = useState('');
-    const [bio, setBio] = useState('');
-    const [open, setOpen] = useState(false);
-    const navigate = useNavigate();
+
+ // 💡 States usados
+
+const [image, setImage] = useState(null);
+const [nickname, setNickname] = useState('');
+const [colorNickname, setColorNickname] = useState('');
+const [age, setAge] = useState('');
+const [bio, setBio] = useState('');
+const [open, setOpen] = useState(false);
+const [error, setError] = useState(null); // 💡 Adicionado para evitar erro de variável não definida
+const { loading, updateProfileImage } = useUpdateProfileImage(); // 💡 instância do Hook para atualizar a imagem
+
+
+
+const navigate = useNavigate();
 
     const handleOpen = () => setOpen(true); 
     const handleClose = () => setOpen(false);
@@ -37,12 +47,41 @@ const User = () => {
             navigate('/chat', { state: { nickname, age, bio, image, colorNickname } });
         }
     };
-    const handleImageChange = (event) => {
+
+    const handleImageChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
-            setImage(URL.createObjectURL(file));
+            setImage(URL.createObjectURL(file)); //💡 Exibe a imagem no frontend
+    
+            // Recuperando o token do localStorage
+            const token = localStorage.getItem('token');
+            console.log("Token recuperado:", token); // 💡 Verifica se o token está vindo corretamente
+            if (!token) {
+                setError('Token de autenticação não encontrado');
+                return;
+            }
+    
+            // 💡 Decodificando o token para obter o userId
+            try {
+                const decodedToken = jwtDecode(token);
+                console.log("Token decodificado:", decodedToken); // 💡 Verifica o conteúdo do token decodificado
+                const userId = decodedToken.sub; //💡  Aqui está o ID do usuário
+                console.log("User ID:", userId); //💡  Deve exibir o ID corretamente agora
+    
+                if (!userId) {
+                    setError("Erro: ID do usuário não encontrado no token.");
+                    return;
+                }
+    
+                // Chama a função para atualizar a foto na API
+                await updateProfileImage(userId, file);
+            } catch (error) {
+                console.error("Erro ao decodificar o token:", error);
+                setError("Token inválido ou expirado.");
+            }
         }
     };
+    
 
     return (
         <div className="home-container">
@@ -57,7 +96,6 @@ const User = () => {
             </Modal>
 
             <div className="form-container">
-                {/* Formulário à esquerda */}
                 <Box className="form-box">
                     <Box className="profile-image-container">
                         {image ? (
@@ -86,20 +124,21 @@ const User = () => {
                         fullWidth
                         margin="normal"
                     />
-                  <div className="color-picker-container">
-    <BlockPicker 
-        color={colorNickname} 
-        onChangeComplete={(color) => setColorNickname(color.hex)} 
-        styles={{
-            default: {
-                card: {
-                    width: '100%', // Adapta ao contêiner
-                    height: 'auto' // Remove sombra extra
-                },
-            },
-        }}
-    />
-</div>
+
+                    <div className="color-picker-container">
+                        <BlockPicker 
+                            color={colorNickname} 
+                            onChangeComplete={(color) => setColorNickname(color.hex)} 
+                            styles={{
+                                default: {
+                                    card: {
+                                        width: '100%',
+                                        height: 'auto',
+                                    },
+                                },
+                            }}
+                        />
+                    </div>
 
                     <TextField
                         id="age-input"
@@ -127,6 +166,6 @@ const User = () => {
             </div>
         </div>
     );
-}
+};
 
 export default User;
