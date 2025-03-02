@@ -4,6 +4,8 @@ import { io } from 'socket.io-client';
 import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import { useNotification } from '../contexts/NotificationContext.tsx';
+import { jwtDecode } from 'jwt-decode';
+import useGetUser from '../hooks/useGetUser.hook.js';
 import '../styles/chat.style.css';
 
 const socket = io('http://localhost:3333');
@@ -15,23 +17,24 @@ const Chat = () => {
     const [colorNickname, setColorNickname] = useState('');
     const [image, setImage] = useState('');
     const { notify } = useNotification();
-
+    const { loading, getUserId, userData } = useGetUser();
     const location = useLocation();
-    const nicknameFromHome = location.state?.nickname;
-    const imageFromHome = location.state?.image; // A URL da imagem
-    const colorNicknameFromHome = location.state?.colorNickname;
 
     useEffect(() => {
-        if (nicknameFromHome) {
-            setNickname(nicknameFromHome);
-            setColorNickname(colorNicknameFromHome);
-            setImage(imageFromHome);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('Token de autenticação não encontrado');
+            return;
+        }
 
-            socket.emit('setNickname', {
-                nickname: nicknameFromHome,
-                image: imageFromHome,
-                colorNickname: colorNicknameFromHome
-            });
+        try {
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken.sub; // ID do usuário no token
+            if (userId) {
+                getUserId(userId);
+            }
+        } catch (error) {
+            console.error("Erro ao decodificar o token:", error);
         }
 
         socket.on('connect', () => {
@@ -43,7 +46,6 @@ const Chat = () => {
         });
 
         socket.on('msgToClient', ({ msg, senderNickname, senderImage, senderColorNickname }) => {
-            // Captura o momento atual quando a mensagem é recebida
             const nowMoment = new Date();
             const formattedTime = nowMoment.toLocaleTimeString('pt-BR');
 
@@ -54,7 +56,7 @@ const Chat = () => {
                     text: msg,
                     image: senderImage,
                     colorNickname: senderColorNickname,
-                    time: formattedTime // Armazena a hora junto com a mensagem
+                    time: formattedTime
                 }
             ]);
             notify(`${senderNickname} enviou uma mensagem.`);
@@ -65,7 +67,23 @@ const Chat = () => {
             socket.off('connect_error');
             socket.off('msgToClient');
         };
-    }, [nicknameFromHome, imageFromHome, colorNicknameFromHome]);
+    }, []);
+
+    // Atualiza a imagem, nickname e cor quando `userData` é carregado  e envia os dados em tempo real para o socket
+    useEffect(() => {
+        if (userData) {
+            setNickname(userData.nickname);
+            setColorNickname(userData.colorNickname);
+            setImage(userData.profileImage || 'default-avatar.png');
+    
+            // Envia os dados do usuário para o WebSocket
+            socket.emit('setNickname', {
+                nickname: userData.nickname,
+                image: userData.profileImage || 'default-avatar.png',
+                colorNickname: userData.colorNickname
+            });
+        }
+    }, [userData]);
 
     const sendMessage = () => {
         if (message.trim()) {
@@ -98,10 +116,9 @@ const Chat = () => {
                                     </strong>{' '}
                                     {msg.text}
                                     <div>
-                                    <span style={{ fontSize: '0.8rem', color: '#888',  marginLeft: '75%'}}>
-                                        
-                                        {msg.time}
-                                    </span>
+                                        <span style={{ fontSize: '0.8rem', color: '#888', marginLeft: '75%' }}>
+                                            {msg.time}
+                                        </span>
                                     </div>
                                 </span>
                             </div>
