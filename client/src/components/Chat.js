@@ -29,7 +29,7 @@ const Chat = () => {
 
         try {
             const decodedToken = jwtDecode(token);
-            const userId = decodedToken.sub; // ID do usuário no token
+            const userId = decodedToken.sub; // 💡 ID do usuário no token
             if (userId) {
                 getUserId(userId);
             }
@@ -69,14 +69,14 @@ const Chat = () => {
         };
     }, []);
 
-    // Atualiza a imagem, nickname e cor quando `userData` é carregado  e envia os dados em tempo real para o socket
+    //💡  Atualiza a imagem, nickname e cor quando `userData` é carregado  e envia os dados em tempo real para o socket
     useEffect(() => {
         if (userData) {
             setNickname(userData.nickname);
             setColorNickname(userData.colorNickname);
             setImage(userData.profileImage || 'default-avatar.png');
     
-            // Envia os dados do usuário para o WebSocket
+            // 💡Envia os dados do usuário para o WebSocket
             socket.emit('setNickname', {
                 nickname: userData.nickname,
                 image: userData.profileImage || 'default-avatar.png',

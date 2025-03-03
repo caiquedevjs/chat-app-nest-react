@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,6 +14,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import useGetUser from '../hooks/useGetUser.hook.js';
 
 const pagesWithIcons = [
   { name: 'Loja', icon: <img src="2913097_amethyst_crystal shard_fantasy_gem_magic_icon.svg" alt="Loja" style={{ width: '40px', height: '40px' }} /> },
@@ -26,10 +28,37 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const NavBarUser = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { loading, getUserId, userData } = useGetUser();
   const [image, setImage] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
-  const imageFromUser = location.state?.image;
+ 
+
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Token de autenticação não encontrado');
+                return;
+            }
+    
+            try {
+                const decodedToken = jwtDecode(token);
+                const userId = decodedToken.sub; // 💡 ID do usuário no token
+                if (userId) {
+                    getUserId(userId);
+                }
+            } catch (error) {
+                console.error("Erro ao decodificar o token:", error);
+            }
+    
+  },[getUserId]);
+
+   useEffect(() => {
+          if (userData) {
+             setImage(userData.profileImage || 'default-avatar.png');
+          }
+      }, [userData]);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -165,7 +194,7 @@ const NavBarUser = () => {
             <Box sx={{ flexGrow :0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p :0 }}>
-                  <Avatar alt="Remy Sharp" src={imageFromUser} />
+                  <Avatar alt="Remy Sharp" src={image} />
                 </IconButton>
               </Tooltip>
               <Menu

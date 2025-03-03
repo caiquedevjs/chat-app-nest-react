@@ -1,0 +1,6 @@
+.custom-icon  {
+    border-radius: 50%; /* Fazendo a imagem redonda */
+    width: 50px; /* Ajuste o tamanho conforme necessário */
+    height: 50px; /* Ajuste o tamanho conforme necessário */
+    object-fit: cover; /* Garantir que a imagem cubra o ícone */
+  }

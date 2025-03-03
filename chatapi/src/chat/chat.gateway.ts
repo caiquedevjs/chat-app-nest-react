@@ -11,7 +11,7 @@ import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
     cors: {
-        origin: 'http://localhost:3000', // URL do cliente React
+        origin: 'http://localhost:3000', // 💡 URL do cliente React
         methods: ['GET', 'POST'],
         allowedHeaders: ['my-custom-header'],
         credentials: true,
@@ -35,7 +35,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
             msg,
             senderNickname: sender.nickname,
             senderImage: sender.image,
-            senderColorNickname: sender.colorNickname, // Corrigir aqui
+            senderColorNickname: sender.colorNickname, // 💡 Corrigir aqui
         });
     }
     

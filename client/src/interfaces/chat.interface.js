@@ -2,6 +2,7 @@ import React from "react";
 import Chat from "../components/Chat.js";
 import NavBarUser from '../components/navbar.user.component.js';
 import SwipeableEdgeDrawerUser from '../components/drawer.user.component.js'
+import RealTimeMap from "../components/map.component";
 
 const ChatInterface = ()=>{
     return(
@@ -10,6 +11,7 @@ const ChatInterface = ()=>{
        
         <NavBarUser/>
         <SwipeableEdgeDrawerUser/>
+        <RealTimeMap/>
         </div>
 
     )

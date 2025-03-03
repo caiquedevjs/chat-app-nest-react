@@ -3,7 +3,7 @@ import { useState } from "react";
 const useGetUser = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [userData, setUserData] = useState(null); // Armazena os dados do usuário
+    const [userData, setUserData] = useState(null); //💡  Armazena os dados do usuário
 
     const getUserId = async (userId) => {
         try {
@@ -20,7 +20,7 @@ const useGetUser = () => {
             }
 
             const data = await response.json();
-            setUserData(data); // Salva os dados do usuário no estado
+            setUserData(data); // 💡 Salva os dados do usuário no estado
             
         } catch (error) {
             setError(error.message);
