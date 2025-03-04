@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
@@ -18,7 +17,7 @@ const Chat = () => {
     const [image, setImage] = useState('');
     const { notify } = useNotification();
     const { loading, getUserId, userData } = useGetUser();
-    const location = useLocation();
+    
 
     useEffect(() => {
         const token = localStorage.getItem('token');

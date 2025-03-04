@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Logger } from '@nestjs/common';
 import {
     OnGatewayConnection,
@@ -20,15 +21,24 @@ import { Server, Socket } from 'socket.io';
 export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer() server: Server;
     private logger: Logger = new Logger('ChatGateway');
-    private clients: Map<string, { nickname: string; image: string ,  colorNickname: string }> = new Map(); // Armazenar clientId, nickname e imagem
+    private clients: Map<string, {
+        position: { lat: number; lng: number; }; nickname: string; image: string ,  colorNickname: string 
+}> = new Map(); // Armazenar clientId, nickname e imagem
 
     @SubscribeMessage('setNickname')
     handleSetNickname(client: Socket, { nickname, image, colorNickname }: { nickname: string; image: string; colorNickname: string }): void {
-        this.clients.set(client.id, { nickname, image, colorNickname });
+        this.clients.set(client.id, {
+            nickname, image, colorNickname,
+            position: {
+                lat: -23.55052,
+                lng: -46.633308 
+            }
+        });
     }
     
 
     @SubscribeMessage('msgToServer')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleMessage(client: Socket, { msg, image }: { msg: string; image: string }): void {
         const sender = this.clients.get(client.id) || { nickname: 'Anonymous', image: '', colorNickname: '#000' };
         this.server.emit('msgToClient', {
@@ -39,6 +49,20 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         });
     }
     
+    @SubscribeMessage('updatePosition')
+    handleUpdatePosition(client: Socket, { lat, lng }: { lat: number, lng: number }): void {
+        const sender = this.clients.get(client.id);
+        if (sender) {
+            sender.position = { lat, lng };
+            this.server.emit('updatePosition', { 
+                id: client.id, 
+                nickname: sender.nickname,
+                image: sender.image, 
+                position: sender.position 
+            });
+        }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     afterInit(server: Server) {
         this.logger.log('Init');
     }
